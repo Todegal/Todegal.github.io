@@ -1,0 +1,21 @@
+@font-face {
+	font-family: 'Metro';
+	src: 
+		local('Metro')
+		url('fonts/Metro.otf') 
+		format('opentype');
+}
+
+body{
+    background-color: black;
+}
+
+h1{
+    font-family: "Metro";
+    color: white;
+}
+
+p{
+    font-family: "Metro";
+	color: white;
+}

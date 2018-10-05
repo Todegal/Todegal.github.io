@@ -11,10 +11,11 @@ body{
 
 h1{
     font-family: "Metro";
-    color: white;
+    color: blue;
 }
 
 p{
     font-family: "Metro";
-	color: white;
+    color: white;
+    font-size: 18px;
 }

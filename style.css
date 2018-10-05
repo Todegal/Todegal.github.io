@@ -1,6 +1,12 @@
 @font-face {
 	font-family: 'Metro';
+<<<<<<< HEAD
 	src: local('Metro') url('fonts/Metro.otf') format('opentype');
+=======
+	src: 
+		url('fonts/Metro.otf') 
+		format('opentype');
+>>>>>>> 769ffbe81f67706fc5fc300a2b07a1aad46b3769
 }
 
 body{
@@ -9,10 +15,11 @@ body{
 
 h1{
     font-family: "Metro";
-    color: white;
+    color: blue;
 }
 
 p{
     font-family: "Metro";
-	color: white;
+    color: white;
+    font-size: 18px;
 }

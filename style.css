@@ -1,9 +1,6 @@
 @font-face {
 	font-family: 'Metro';
-	src: 
-		local('Metro')
-		url('fonts/Metro.otf') 
-		format('opentype');
+	src: local('Metro') url('fonts/Metro.otf') format('opentype');
 }
 
 body{

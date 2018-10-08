@@ -15,6 +15,12 @@ h1 {
 	display: inline;
 }
 
+h2 {
+	font-family: "Metro";
+	color: blue;
+	font-size: 24px;
+}
+
 p {
     font-family: "Metro";
     color: white;
@@ -23,12 +29,11 @@ p {
 
 a {
 	font-family: "Metro";
-	color: #ff3122;
+	color: #ff1100;
 	font-size: 18px;
 }
 
 .nav {
-	background-color: black;
     list-style-type: none;
     text-align: center;
     display: inline;

@@ -29,8 +29,10 @@ function main() {
     uniform mat4 uModelViewMatrix;
     uniform mat4 uProjectionMatrix;
 	varying highp vec3 VM;
-    void main(void) {
+	varying highp vec3 PVM;
+   void main(void) {
 	  VM = vec3(uModelViewMatrix * aVertexPosition);
+	  PVM = vec3(uProjectionMatrix * uModelViewMatrix * aVertexPosition);
       gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
     }
   `;
@@ -39,8 +41,9 @@ function main() {
 
   const fsSource = `
 	varying highp vec3 VM;
+	varying highp vec3 PVM;
     void main(void) {
-      gl_FragColor = vec4((dot(vec3(0, 10, 0), VM) * 0.1) + 0.1, (dot(vec3(0, -2, 0), VM) * 0.1) + 0.1, (dot(vec3(5, 0, 0), VM) * 0.1) + 0.1, 1);
+      gl_FragColor = vec4((dot(vec3(0, 10, 0), VM) * 0.1) + 0.1 * PVM.z, (dot(vec3(0, -2, 0), VM) * 0.1) + 0.1 * PVM.z, (dot(vec3(5, 0, 0), VM) * 0.1) + 0.1 * PVM.z, 1);
     }
   `;
 

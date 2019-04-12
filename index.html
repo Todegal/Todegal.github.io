@@ -3,18 +3,71 @@
 <head>
 	<title>Todegal</title>
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 
-<body>
-<h1>Todegal</h1>
+<body onload="initPlanet();">
 
-<ul class="nav">
-	<li><a href="">Home</a></li>
-	<li><a href="projects.html">Projects</a></li>
-</ul>
+<div id="title-planet">
 
-<p>Hello and welcome to my website. I am Niall Townley also known as Todegal.</p>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/2010-brown-bear.jpg/200px-2010-brown-bear.jpg" alt="bear">
+<canvas id="planetCanvas" width=480 height=480>
+	<p>Your browser does not support canvases, imagine something cool here</p>
+</canvas>
+<img id="albedo-texture" src="bear.jpg" width="0" height="0" crossorigin="anonymous"></img>
+<script src="sphereFactory.js"></script>
+<script src="gl-matrix.js"></script>
+<script src="planet.js"></script>
 
+</div>
+
+<h1 id="title-text">Todegal</h1>
+
+<div id="container">
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<p>scroll</p>
+
+</div>
+
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+	AOS.init();
+</script>
 </body>
 </html>

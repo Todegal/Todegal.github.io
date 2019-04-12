@@ -1,48 +1,43 @@
 @font-face {
 	font-family: 'Metro';
-	src: 
-		url('fonts/Metro.otf') 
+	src:
+		url('fonts/Metro.otf')
 		format('opentype');
+}
+
+/* Standard syntax */
+@keyframes title-slide {
+  from {margin-top: -200px; opacity: 0;}
+  to {margin-top: 0px;}
+}
+
+@keyframes fade {
+	0% {
+		opacity: 0;
+	}
+	80% {
+		opacity 0;
+	}
 }
 
 body {
     background-color: black;
+		font-family: 'Metro';
+		color: white;
+		text-align: center;
+		margin-top: 0px;
 }
 
-h1 {
-    font-family: "Metro";
-    color: blue;
-	display: inline;
+#container {
+		animation: fade 4s;
 }
 
-h2 {
-	font-family: "Metro";
-	color: blue;
-	font-size: 24px;
+#title-planet {
+	animation: title-slide 2.5s;
 }
 
-p {
-    font-family: "Metro";
-    color: white;
-    font-size: 18px;
-}
-
-a {
-	font-family: "Metro";
-	color: #ff1100;
-	font-size: 18px;
-}
-
-.nav {
-    list-style-type: none;
-    text-align: center;
-    display: inline;
-    width: 75%;
-    height: 20%;
-}
-
-.nav li {
-    display: inline-block;
-    font-size: 20px;
-	margin: 20px;
+#title-text {
+	margin-top: 0px;
+	animation: title-slide 3.5s;
+	font-size: 50px;
 }

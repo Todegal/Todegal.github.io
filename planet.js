@@ -54,7 +54,8 @@ var fragmentShaderText =
   '   vec4 nightColour = texture2D(nightTexture, vec2(1.0 - fragUV.x, fragUV.y)) * vec4(1.0/min(1.0, diff + 0.1));',
   '   vec4 baseColour = mix(nightColour, dayColour, diff) + texture2D(cloudTexture, vec2(1.0 - fragUV.x, fragUV.y));',
   '',
-  '   gl_FragColor = baseColour * (vec4(diff) + vec4(0.1) + (vec4(specular, 1.0) * texture2D(specularTexture, vec2(1.0 - fragUV.x, fragUV.y))));',
+  '   //gl_FragColor = baseColour * (vec4(diff) + vec4(0.1) + (vec4(specular, 1.0) * texture2D(specularTexture, vec2(1.0 - fragUV.x, fragUV.y))));',
+  '   gl_FragColor = texture2D(cloudTexture, vec2(1.0 - fragUV.x, fragUV.y));',
   '}'
 ].join('\n');
 

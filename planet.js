@@ -35,7 +35,7 @@ var fragmentShaderText =
   '',
   'void main()',
   '{',
-  '   vec4 baseColour = texture2D(albedoTexture, -fragUV);',
+  '   vec4 baseColour = texture2D(albedoTexture, vec2(1, 1) - fragUV);',
   '   //vec4 baseColour = vec4(0, 0, 1, 1);',
   '',
   'vec3 norm = normalize(fragNormal);',

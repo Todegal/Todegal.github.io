@@ -71,7 +71,7 @@ var initPlanet = function()
 
 	gl.enable(gl.DEPTH_TEST);
 	gl.enable(gl.CULL_FACE);
-	//gl.frontFace(gl.CCW);
+	gl.frontFace(gl.CCW);
 	gl.cullFace(gl.BACK);
 
   var vertexShader = gl.createShader(gl.VERTEX_SHADER);

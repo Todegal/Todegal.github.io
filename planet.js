@@ -32,24 +32,27 @@ var fragmentShaderText =
   'varying vec2 fragUV;',
   '',
   'uniform sampler2D albedoTexture;',
+  'uniform sampler2D specularTexture;',
+  'uniform sampler2D nightTexture;',
   '',
   'void main()',
   '{',
-  '   vec4 baseColour = texture2D(albedoTexture, vec2(1.0 - fragUV.x, fragUV.y));',
-  '   //vec4 baseColour = vec4(0, 0, 1, 1);',
+  '   vec4 dayColour = texture2D(albedoTexture, vec2(1.0 - fragUV.x, fragUV.y));',
+  '   vec4 nightColour = texture2D(nightTexture, vec2(1.0 - fragUV.x, fragUV.y));',
   '',
-  'vec3 norm = normalize(fragNormal);',
-  'vec3 lightDir = vec3(1, 0, -0.5);',
+  '   vec3 norm = normalize(fragNormal);',
+  '   vec3 lightDir = vec3(1, 0, -0.5);',
   '',
-  'float diff = max(dot(norm, lightDir), 0.0);',
+  '   float diff = max(dot(norm, lightDir), 0.0);',
   '',
-  'vec3 viewDir = vec3(0, 0.25, -1);',
-  'vec3 reflectDir = reflect(-lightDir, norm);',
+  '   vec3 viewDir = vec3(0, 0.3, -1);',
+  '   vec3 reflectDir = reflect(-lightDir, norm);',
   '',
-  'float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);',
-  'vec3 specular = vec3(spec * 0.1);',
+  '   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);',
+  '   vec3 specular = vec3(spec * 0.1);',
   '',
-  'gl_FragColor = baseColour * (vec4(diff) + vec4(0.1) + vec4(specular, 1.0));',
+  '   vec4 baseColour = mix(dayColour, nightColour, diff);',
+  '   gl_FragColor = baseColour * (vec4(diff) + vec4(0.1) + (vec4(specular, 1.0) * texture2D(specularTexture, vec2(1.0 - fragUV.x, fragUV.y)));',
   '}'
 ].join('\n');
 
@@ -182,6 +185,32 @@ var initPlanet = function()
   		document.getElementById('albedo-texture')
   );
 
+  var nightTex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, nightTex);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+  gl.texImage2D(
+  		gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
+  		gl.UNSIGNED_BYTE,
+  		document.getElementById('night-texture')
+  );
+
+  var specTex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, specTex);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+  gl.texImage2D(
+  		gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
+  		gl.UNSIGNED_BYTE,
+  		document.getElementById('specular-texture')
+  );
+
   gl.useProgram(program);
 
   var worldLoc = gl.getUniformLocation(program, "World");
@@ -193,7 +222,7 @@ var initPlanet = function()
   var viewMatrix = new Float32Array(16);
 
   mat4.identity(worldMatrix);
-  mat4.lookAt(viewMatrix, [0, 1, -4], [0, 0, 0], [0, 1, 0]);
+  mat4.lookAt(viewMatrix, [0, 1.2, -4], [0, 0, 0], [0, 1, 0]);
   mat4.perspective(projMatrix, glMatrix.toRadian(45), canvas.clientWidth / canvas.clientHeight, 0.1, 1000.0);
 
   gl.uniformMatrix4fv(worldLoc, gl.FALSE, worldMatrix);
@@ -202,6 +231,12 @@ var initPlanet = function()
 
   var albedoLoc = gl.getUniformLocation(program, "albedoTexture");
   gl.uniform1i(albedoLoc, 0);
+
+  var nightLoc = gl.getUniformLocation(program, "nightTexture");
+  gl.uniform1i(nightLoc, 1);
+
+  var specLoc = gl.getUniformLocation(program, "specularTexture");
+  gl.uniform1i(specLoc, 2);
 
   var planetSpin = 0.0;
 

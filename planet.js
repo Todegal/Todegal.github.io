@@ -38,7 +38,7 @@ var fragmentShaderText =
   'void main()',
   '{',
   '   vec4 dayColour = texture2D(albedoTexture, vec2(1.0 - fragUV.x, fragUV.y));',
-  '   vec4 nightColour = texture2D(nightTexture, vec2(1.0 - fragUV.x, fragUV.y)) + vec4(0.5);',
+  '   vec4 nightColour = texture2D(nightTexture, vec2(1.0 - fragUV.x, fragUV.y)) + vec4(0.3);',
   '',
   '   vec3 norm = normalize(fragNormal);',
   '   vec3 lightDir = vec3(1, 0, -0.5);',

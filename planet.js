@@ -10,11 +10,15 @@ var vertexShaderText =
   'uniform mat4 View;',
   'uniform mat4 Proj;',
   '',
-  'varying vec2 fragUVs;',
+  'varying vec3 fragPosition;',
+  'varying vec3 fragNormal;',
+  'varying vec2 fragUV;',
   '',
   'void main()',
   '{',
-  '   fragUVs = uvs;',
+  '   fragUV = uvs;',
+  '   fragPosition = pos;',
+  '   fragNormal = norms;',
   '   gl_Position = Proj * View * World * vec4(pos, 1.0);',
   '}'
 ].join('\n');
@@ -23,13 +27,29 @@ var fragmentShaderText =
 [
   'precision mediump float;',
   '',
-  'varying vec2 fragUVs;',
+  'varying vec3 fragPosition;',
+  'varying vec3 fragNormal;',
+  'varying vec2 fragUV;',
   '',
   'uniform sampler2D albedoTexture;',
   '',
   'void main()',
   '{',
-  '   gl_FragColor = texture2D(albedoTexture, fragUVs);',
+  '   vec4 baseColour = texture2D(albedoTexture, fragUV);',
+  '   //vec4 baseColour = vec4(0, 0, 1, 1);',
+  '',
+  'vec3 norm = normalize(fragNormal);',
+  'vec3 lightDir = vec3(1, 0, 0.5);',
+  '',
+  'float diff = max(dot(norm, lightDir), 0.0);',
+  '',
+  'vec3 viewDir = vec3(0, 0, 1);',
+  'vec3 reflectDir = reflect(-lightDir, norm);',
+  '',
+  'float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);',
+  'vec3 specular = vec3(spec * 0.1);',
+  '',
+  'gl_FragColor = baseColour * (vec4(diff) + vec4(0.1) + vec4(specular, 1.0));',
   '}'
 ].join('\n');
 
@@ -90,7 +110,7 @@ var initPlanet = function()
 	// Create buffer
 	//
 
-  var sphere = generateSphere(1.0, 16, 16);
+  var sphere = generateSphere(1.0, 24, 24);
 
   var positionAttribLocation = gl.getAttribLocation(program, 'pos');
   var normalAttribLocation = gl.getAttribLocation(program, 'norms');

@@ -43,7 +43,7 @@ var fragmentShaderText =
   '',
   'float diff = max(dot(norm, lightDir), 0.0);',
   '',
-  'vec3 viewDir = vec3(0, 0, -1);',
+  'vec3 viewDir = vec3(0, 0.5, -1);',
   'vec3 reflectDir = reflect(-lightDir, norm);',
   '',
   'float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);',
@@ -193,7 +193,7 @@ var initPlanet = function()
   var viewMatrix = new Float32Array(16);
 
   mat4.identity(worldMatrix);
-  mat4.lookAt(viewMatrix, [0, 0, -4], [0, 0, 0], [0, 1, 0]);
+  mat4.lookAt(viewMatrix, [0, 2, -4], [0, 0, 0], [0, 1, 0]);
   mat4.perspective(projMatrix, glMatrix.toRadian(45), canvas.clientWidth / canvas.clientHeight, 0.1, 1000.0);
 
   gl.uniformMatrix4fv(worldLoc, gl.FALSE, worldMatrix);

@@ -34,6 +34,7 @@ var fragmentShaderText =
   'uniform sampler2D albedoTexture;',
   'uniform sampler2D specularTexture;',
   'uniform sampler2D nightTexture;',
+  'uniform sampler2D cloudTexture;',
   '',
   'void main()',
   '{',
@@ -46,12 +47,12 @@ var fragmentShaderText =
   '   vec3 viewDir = vec3(0, 0.3, -1);',
   '   vec3 reflectDir = reflect(-lightDir, norm);',
   '',
-  '   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);',
+  '   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16.0);',
   '   vec3 specular = vec3(spec * 0.1);',
   '',
   '   vec4 dayColour = texture2D(albedoTexture, vec2(1.0 - fragUV.x, fragUV.y));',
   '   vec4 nightColour = texture2D(nightTexture, vec2(1.0 - fragUV.x, fragUV.y)) * vec4(1.0/min(1.0, diff + 0.1));',
-  '   vec4 baseColour = mix(nightColour, dayColour, diff);',
+  '   vec4 baseColour = mix(nightColour, dayColour, diff) + texture2D(cloudTexture, vec2(1.0 - fragUV.x, fragUV.y));',
   '',
   '   gl_FragColor = baseColour * (vec4(diff) + vec4(0.1) + (vec4(specular, 1.0) * texture2D(specularTexture, vec2(1.0 - fragUV.x, fragUV.y))));',
   '}'
@@ -215,6 +216,20 @@ var initPlanet = function()
   		document.getElementById('specular-texture')
   );
 
+  var cloudTex = gl.createTexture();
+  gl.activeTexture(gl.TEXTURE3);
+  gl.bindTexture(gl.TEXTURE_2D, cloudTex);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+  gl.texImage2D(
+  		gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
+  		gl.UNSIGNED_BYTE,
+  		document.getElementById('cloud-texture')
+  );
+
   gl.useProgram(program);
 
   var worldLoc = gl.getUniformLocation(program, "World");
@@ -241,6 +256,9 @@ var initPlanet = function()
 
   var specLoc = gl.getUniformLocation(program, "specularTexture");
   gl.uniform1i(specLoc, 2);
+
+  var cloudLoc = gl.getUniformLocation(program, "cloudTexture");
+  gl.uniform1i(cloudLoc, 3);
 
   var planetSpin = 0.0;
 

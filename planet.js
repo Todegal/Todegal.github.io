@@ -17,8 +17,8 @@ var vertexShaderText =
   'void main()',
   '{',
   '   fragUV = uvs;',
-  '   fragPosition = pos;',
-  '   fragNormal = norms;',
+  '   fragPosition = (World * vec4(pos, 1.0)).xyz;',
+  '   fragNormal = (World * vec4(norms, 1.0)).xyz;',
   '   gl_Position = Proj * View * World * vec4(pos, 1.0);',
   '}'
 ].join('\n');
@@ -36,7 +36,7 @@ var fragmentShaderText =
   'void main()',
   '{',
   '   vec4 baseColour = texture2D(albedoTexture, fragUV);',
-  '   //vec4 baseColour = vec4(0, 0, 1, 1);',
+  '   vec4 baseColour = vec4(0, 0, 1, 1);',
   '',
   'vec3 norm = normalize(fragNormal);',
   'vec3 lightDir = vec3(1, 0, 0.5);',
@@ -201,10 +201,21 @@ var initPlanet = function()
   var albedoLoc = gl.getUniformLocation(program, "albedoTexture");
   gl.uniform1i(albedoLoc, 0);
 
+  var planetSpin = 0.0;
+
+  var then = Date.now();
+
 	//
 	// Main render loop
 	//
   var loop = function (now) {
+    var dT = (now - then) / 1000;
+
+    planetSpin += 2.0 * dT;
+
+    mat4.fromRotation(worldMatrix, planetSpin, [0, 1, 0]);
+    gl.uniformMatrix4fv(worldLoc, gl.FALSE, worldMatrix);
+
     //console.log(now);
 		gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 
@@ -212,6 +223,8 @@ var initPlanet = function()
 		gl.activeTexture(gl.TEXTURE0);
 
 		gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_SHORT, 0);
+
+    then = now;
 
 		requestAnimationFrame(loop);
 	};

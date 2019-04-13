@@ -39,11 +39,11 @@ var fragmentShaderText =
   '   //vec4 baseColour = vec4(0, 0, 1, 1);',
   '',
   'vec3 norm = normalize(fragNormal);',
-  'vec3 lightDir = vec3(1, 0, 0.5);',
+  'vec3 lightDir = vec3(1, 0, -0.5);',
   '',
   'float diff = max(dot(norm, lightDir), 0.0);',
   '',
-  'vec3 viewDir = vec3(0, 0, 1);',
+  'vec3 viewDir = vec3(0, 0, -1);',
   'vec3 reflectDir = reflect(-lightDir, norm);',
   '',
   'float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);',
@@ -73,7 +73,7 @@ var initPlanet = function()
 	gl.enable(gl.CULL_FACE);
   gl.depthFunc(gl.LESS);
 
-	gl.frontFace(gl.CCW);
+	gl.frontFace(gl.CW);
 	gl.cullFace(gl.BACK);
 
   var vertexShader = gl.createShader(gl.VERTEX_SHADER);

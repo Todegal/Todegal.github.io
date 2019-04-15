@@ -22,7 +22,7 @@ body {
 #title-text {
 	margin-top: 0px;
 	font-size: 50px;
-	text-shadow: 6px 6px red;
+	text-shadow: 6px 6px #0000FF;
 }
 
 ::-webkit-scrollbar {
@@ -34,11 +34,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #000675;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #024694;
 }
 
 ::selection {

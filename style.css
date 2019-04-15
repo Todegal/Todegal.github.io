@@ -5,23 +5,8 @@
 		format('opentype');
 }
 
-/* Standard syntax */
-@keyframes title-slide {
-  from {margin-top: -200px; opacity: 0;}
-  to {margin-top: 0px;}
-}
-
-@keyframes fade {
-	0% {
-		opacity: 0;
-	}
-	80% {
-		opacity 0;
-	}
-}
-
 body {
-    background-color: black;
+    background-color: #010025;
 		font-family: 'Metro';
 		color: white;
 		text-align: center;
@@ -29,15 +14,37 @@ body {
 }
 
 #container {
-		animation: fade 4s;
 }
 
 #title-planet {
-	animation: title-slide 2.5s;
 }
 
 #title-text {
 	margin-top: 0px;
-	animation: title-slide 3.5s;
 	font-size: 50px;
+	text-shadow: 6px 6px red;
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+::selection {
+    background: black;
+}
+::-moz-selection {
+    background: black;
+}
+

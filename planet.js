@@ -32,30 +32,30 @@ var fragmentShaderText =
   'varying vec2 fragUV;',
   '',
   'uniform sampler2D albedoTexture;',
-  'uniform sampler2D specularTexture;',
   'uniform sampler2D nightTexture;',
-  'uniform sampler2D cloudTexture;',
+  'uniform sampler2D specularTexture;',
+  'uniform sampler2D cloudTex;',
   '',
   'void main()',
   '{',
   '',
   '   vec3 norm = normalize(fragNormal);',
-  '   vec3 lightDir = vec3(1, 0, -0.5);',
+  '   vec3 lightDir = vec3(1, 0.5, -0.5);',
   '',
   '   float diff = max(dot(norm, lightDir), 0.0);',
   '',
   '   vec3 viewDir = vec3(0, 0.3, -1);',
   '   vec3 reflectDir = reflect(-lightDir, norm);',
   '',
-  '   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16.0);',
+  '   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);',
   '   vec3 specular = vec3(spec * 0.1);',
   '',
   '   vec4 dayColour = texture2D(albedoTexture, vec2(1.0 - fragUV.x, fragUV.y));',
   '   vec4 nightColour = texture2D(nightTexture, vec2(1.0 - fragUV.x, fragUV.y)) * vec4(1.0/min(1.0, diff + 0.1));',
-  '   vec4 baseColour = mix(nightColour, dayColour, diff) + texture2D(cloudTexture, vec2(1.0 - fragUV.x, fragUV.y));',
+  '   vec4 baseColour = mix(nightColour, dayColour, diff);// + texture2D(cloudTex, vec2(1.0 - fragUV.x, fragUV.y));',
   '',
-  '   //gl_FragColor = baseColour * (vec4(diff) + vec4(0.1) + (vec4(specular, 1.0) * texture2D(specularTexture, vec2(1.0 - fragUV.x, fragUV.y))));',
-  '   gl_FragColor = texture2D(cloudTexture, vec2(1.0 - fragUV.x, fragUV.y));',
+  '   gl_FragColor = baseColour * (vec4(diff + 0.1) + (vec4(specular, 1.0) * texture2D(specularTexture, vec2(1.0 - fragUV.x, fragUV.y))));',
+  '   //gl_FragColor = texture2D(cloudTex, vec2(1.0 - fragUV.x, fragUV.y));',
   '}'
 ].join('\n');
 
@@ -118,7 +118,7 @@ var initPlanet = function()
 	// Create buffer
 	//
 
-  var sphere = generateSphere(1.0, 24, 24);
+  var sphere = generateSphere(1.0, 16, 16);
 
   var positionAttribLocation = gl.getAttribLocation(program, 'pos');
   var normalAttribLocation = gl.getAttribLocation(program, 'norms');
@@ -176,27 +176,29 @@ var initPlanet = function()
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(sphere.indices), gl.STATIC_DRAW);
 
   var albedoTex = gl.createTexture();
-  gl.activeTexture(gl.TEXTURE0);
+  gl.activeTexture(gl.TEXTURE1);
   gl.bindTexture(gl.TEXTURE_2D, albedoTex);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
+  gl.activeTexture(gl.TEXTURE1);
   gl.texImage2D(
   		gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
   		gl.UNSIGNED_BYTE,
-  		document.getElementById('albedo-texture')
+  		document.getElementById("albedo-texture")
   );
 
   var nightTex = gl.createTexture();
-  gl.activeTexture(gl.TEXTURE1);
+  gl.activeTexture(gl.TEXTURE2);
   gl.bindTexture(gl.TEXTURE_2D, nightTex);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
+  gl.activeTexture(gl.TEXTURE2);
   gl.texImage2D(
   		gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
   		gl.UNSIGNED_BYTE,
@@ -204,13 +206,14 @@ var initPlanet = function()
   );
 
   var specTex = gl.createTexture();
-  gl.activeTexture(gl.TEXTURE2);
+  gl.activeTexture(gl.TEXTURE3);
   gl.bindTexture(gl.TEXTURE_2D, specTex);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
+  gl.activeTexture(gl.TEXTURE3);
   gl.texImage2D(
   		gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
   		gl.UNSIGNED_BYTE,
@@ -218,13 +221,14 @@ var initPlanet = function()
   );
 
   var cloudTex = gl.createTexture();
-  gl.activeTexture(gl.TEXTURE3);
+  gl.activeTexture(gl.TEXTURE4);
   gl.bindTexture(gl.TEXTURE_2D, cloudTex);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
+  gl.activeTexture(gl.TEXTURE4);
   gl.texImage2D(
   		gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
   		gl.UNSIGNED_BYTE,
@@ -250,16 +254,18 @@ var initPlanet = function()
   gl.uniformMatrix4fv(projLoc, gl.FALSE, projMatrix);
 
   var albedoLoc = gl.getUniformLocation(program, "albedoTexture");
-  gl.uniform1i(albedoLoc, 0);
+  gl.uniform1i(albedoLoc, 1);
 
   var nightLoc = gl.getUniformLocation(program, "nightTexture");
-  gl.uniform1i(nightLoc, 1);
+  gl.uniform1i(nightLoc, 2);
 
   var specLoc = gl.getUniformLocation(program, "specularTexture");
-  gl.uniform1i(specLoc, 2);
+  gl.uniform1i(specLoc, 3);
 
-  var cloudLoc = gl.getUniformLocation(program, "cloudTexture");
-  gl.uniform1i(cloudLoc, 3);
+  var cloudLoc = gl.getUniformLocation(program, "cloudTex");
+  gl.uniform1i(cloudLoc, 4);
+
+  var maxTextures = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS);
 
   var planetSpin = 0.0;
 
@@ -271,7 +277,7 @@ var initPlanet = function()
   var loop = function (now) {
     var dT = (now - then) / 1000;
 
-    planetSpin += 2.0 * dT;
+    planetSpin -= 0.05 * dT;
 
     mat4.fromRotation(worldMatrix, planetSpin, [0, 1, 0]);
     gl.uniformMatrix4fv(worldLoc, gl.FALSE, worldMatrix);

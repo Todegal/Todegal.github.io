@@ -1,4 +1,4 @@
-var vertexShaderText =
+let vertexShaderText =
 [
   'precision mediump float;',
   '',
@@ -23,7 +23,7 @@ var vertexShaderText =
   '}'
 ].join('\n');
 
-var fragmentShaderText =
+let fragmentShaderText =
 [
   'precision mediump float;',
   '',
@@ -55,14 +55,13 @@ var fragmentShaderText =
   '   vec4 baseColour = mix(nightColour, dayColour, diff);// + texture2D(cloudTex, vec2(1.0 - fragUV.x, fragUV.y));',
   '',
   '   gl_FragColor = baseColour * (vec4(diff + 0.1) + (vec4(specular, 1.0) * texture2D(specularTexture, vec2(1.0 - fragUV.x, fragUV.y))));',
-  '   //gl_FragColor = texture2D(cloudTex, vec2(1.0 - fragUV.x, fragUV.y));',
   '}'
 ].join('\n');
 
-var initPlanet = function()
+let initPlanet = function()
 {
-  var canvas = document.getElementById("planetCanvas");
-  var gl = canvas.getContext('webgl');
+  let canvas = document.getElementById("planetCanvas");
+  let gl = canvas.getContext('webgl');
 
 	if (!gl) {
 		console.log('WebGL not supported, falling back on experimental-webgl');
@@ -82,8 +81,8 @@ var initPlanet = function()
 	gl.frontFace(gl.CW);
 	gl.cullFace(gl.BACK);
 
-  var vertexShader = gl.createShader(gl.VERTEX_SHADER);
-  var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  let vertexShader = gl.createShader(gl.VERTEX_SHADER);
+  let fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
 
   gl.shaderSource(vertexShader, vertexShaderText);
   gl.shaderSource(fragmentShader, fragmentShaderText);
@@ -100,7 +99,7 @@ var initPlanet = function()
 		return;
 	}
 
-  var program = gl.createProgram();
+  let program = gl.createProgram();
 	gl.attachShader(program, vertexShader);
 	gl.attachShader(program, fragmentShader);
 	gl.linkProgram(program);
@@ -118,15 +117,15 @@ var initPlanet = function()
 	// Create buffer
 	//
 
-  var sphere = generateSphere(1.0, 16, 16);
+  let sphere = generateSphere(1.0, 16, 16);
 
-  var positionAttribLocation = gl.getAttribLocation(program, 'pos');
-  var normalAttribLocation = gl.getAttribLocation(program, 'norms');
-  var uvAttribLocation = gl.getAttribLocation(program, 'uvs');
+  let positionAttribLocation = gl.getAttribLocation(program, 'pos');
+  let normalAttribLocation = gl.getAttribLocation(program, 'norms');
+  let uvAttribLocation = gl.getAttribLocation(program, 'uvs');
 
   //alert([positionAttribLocation, normalAttribLocation, uvAttribLocation]);
 
-	var vertexBuffer = gl.createBuffer();
+	let vertexBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(sphere.vertices), gl.STATIC_DRAW);
 
@@ -141,7 +140,7 @@ var initPlanet = function()
 
   gl.enableVertexAttribArray(positionAttribLocation);
 
-  var normalBuffer = gl.createBuffer();
+  let normalBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(sphere.normals), gl.STATIC_DRAW);
 
@@ -156,7 +155,7 @@ var initPlanet = function()
 
 	gl.enableVertexAttribArray(normalAttribLocation);
 
-  var uvBuffer = gl.createBuffer();
+  let uvBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(sphere.uvs), gl.STATIC_DRAW);
 
@@ -171,11 +170,11 @@ var initPlanet = function()
 
 	gl.enableVertexAttribArray(uvAttribLocation);
 
-  var indexBuffer = gl.createBuffer();
+  let indexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(sphere.indices), gl.STATIC_DRAW);
 
-  var albedoTex = gl.createTexture();
+  let albedoTex = gl.createTexture();
   gl.activeTexture(gl.TEXTURE1);
   gl.bindTexture(gl.TEXTURE_2D, albedoTex);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -190,7 +189,7 @@ var initPlanet = function()
   		document.getElementById("albedo-texture")
   );
 
-  var nightTex = gl.createTexture();
+  let nightTex = gl.createTexture();
   gl.activeTexture(gl.TEXTURE2);
   gl.bindTexture(gl.TEXTURE_2D, nightTex);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -205,7 +204,7 @@ var initPlanet = function()
   		document.getElementById('night-texture')
   );
 
-  var specTex = gl.createTexture();
+  let specTex = gl.createTexture();
   gl.activeTexture(gl.TEXTURE3);
   gl.bindTexture(gl.TEXTURE_2D, specTex);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -219,31 +218,15 @@ var initPlanet = function()
   		gl.UNSIGNED_BYTE,
   		document.getElementById('specular-texture')
   );
-
-  var cloudTex = gl.createTexture();
-  gl.activeTexture(gl.TEXTURE4);
-  gl.bindTexture(gl.TEXTURE_2D, cloudTex);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-  gl.activeTexture(gl.TEXTURE4);
-  gl.texImage2D(
-  		gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
-  		gl.UNSIGNED_BYTE,
-  		document.getElementById('cloud-texture')
-  );
-
   gl.useProgram(program);
 
-  var worldLoc = gl.getUniformLocation(program, "World");
-  var viewLoc = gl.getUniformLocation(program, "View");
-  var projLoc = gl.getUniformLocation(program, "Proj");
+  let worldLoc = gl.getUniformLocation(program, "World");
+  let viewLoc = gl.getUniformLocation(program, "View");
+  let projLoc = gl.getUniformLocation(program, "Proj");
 
-  var worldMatrix = new Float32Array(16);
-  var projMatrix = new Float32Array(16);
-  var viewMatrix = new Float32Array(16);
+  let worldMatrix = new Float32Array(16);
+  let projMatrix = new Float32Array(16);
+  let viewMatrix = new Float32Array(16);
 
   mat4.identity(worldMatrix);
   mat4.lookAt(viewMatrix, [0, 1.2, -4], [0, 0, 0], [0, 1, 0]);
@@ -253,29 +236,29 @@ var initPlanet = function()
   gl.uniformMatrix4fv(viewLoc, gl.FALSE, viewMatrix);
   gl.uniformMatrix4fv(projLoc, gl.FALSE, projMatrix);
 
-  var albedoLoc = gl.getUniformLocation(program, "albedoTexture");
+  let albedoLoc = gl.getUniformLocation(program, "albedoTexture");
   gl.uniform1i(albedoLoc, 1);
 
-  var nightLoc = gl.getUniformLocation(program, "nightTexture");
+  let nightLoc = gl.getUniformLocation(program, "nightTexture");
   gl.uniform1i(nightLoc, 2);
 
-  var specLoc = gl.getUniformLocation(program, "specularTexture");
+  let specLoc = gl.getUniformLocation(program, "specularTexture");
   gl.uniform1i(specLoc, 3);
 
-  var cloudLoc = gl.getUniformLocation(program, "cloudTex");
+  let cloudLoc = gl.getUniformLocation(program, "cloudTex");
   gl.uniform1i(cloudLoc, 4);
 
-  var maxTextures = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS);
+  let maxTextures = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS);
 
-  var planetSpin = 0.0;
+  let planetSpin = 0.0;
 
-  var then = Date.now();
+  let then = Date.now();
 
 	//
 	// Main render loop
 	//
-  var loop = function (now) {
-    var dT = (now - then) / 1000;
+  let loop = function (now) {
+    let dT = (now - then) / 1000;
 
     planetSpin -= 0.05 * dT;
 

@@ -46,7 +46,7 @@ body {
 	text-align: center;
 }
 
-#tutorials {
+#tutorials, #projects {
 	display: flex;
 	flex-direction: row;
 }
@@ -60,10 +60,8 @@ body {
 
 .container-title {
 	font-size: 24px;
-	text-decoration: underline; 
+	text-decoration: underline;
 	padding: 1%;
-	width: 25%;
-	margin: 0 auto;
 	text-align: center;
 	background-color: #151515;
 	color: white;
@@ -71,20 +69,47 @@ body {
 
 .container {
 	background-color: #484848;
+	position: relative;
+	padding-top: 10%;
 	padding: 1%;
 	width: 90%;
 	margin: 0 auto;
+	margin-bottom: 2%;
 	color: black;
 	text-align: center;
 }
 
-.tutorial {
-	flex: auto;
+.tutorial, .project {
+	flex: 1;
 	background-color: white;
-	margin-top: 1%;
-	padding-bottom: 25%;
+	margin-top: 2%;
+	padding-top: 1%;
+	padding-bottom: 5%;
+	position: relative;
+	color: black;
+	text-decoration: none;
 }
 
-.tutorial:hover {
+.tutorial-title, .project-title {
+	font-size: 18px;
+}
+
+.tutorial-desc, .project-desc {
+	font-size: 18px;
+	text-align: center;
+	font-family: Arial;
+	margin: 2%;
+}
+
+.tutorial-no {
+	font-family: Arial;
+	font-size: 11px;
+	margin: 2%;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+
+.tutorial:hover, .project:hover {
 	background-color: #a2a2a2;
 }

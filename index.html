@@ -4,7 +4,6 @@
 	<title>Niall Townley</title>
 	<link rel="icon" href="https://nialltownley.co.uk/favicon.png">
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 
 <body onload="initPlanet();">
@@ -15,9 +14,7 @@
 	</canvas>
 	<img id="albedo-texture" src="https://nialltownley.co.uk/textures/earthDay.jpg" width="0" height="0" crossorigin="anonymous"/>
 	<img id="night-texture" src="https://nialltownley.co.uk/textures/earthNight.jpg" width="0" height="0" crossorigin="anonymous"/>
-	<img id="specular-texture" src="https://nialltownley.co.uk/textures/earthSpecular.jpg" width="0" height="0" crossorigin="anonymous"/>
-	<img id="cloud-texture" src="https://nialltownley.co.uk/textures/earthClouds.jpg" width="0" height="0" crossorigin="anonymous"/>
-	<img id="transparency-texture" src="https://nialltownley.co.uk/textures/earthCloudsTransparency.jpg" width="0" height="0" crossorigin="anonymous"/>
+	<img id="specular-texture" src="https://nialltownley.co.uk/textures/earthSpecular.jpg" width="0" height="0" crossorigin="anonymous">
 	<script src="sphereFactory.js"></script>
 	<script src="gl-matrix.js"></script>
 	<script src="planet.js"></script>
@@ -26,26 +23,47 @@
 <h1 id="title-text">Niall Townley</h1>
 <p id="subtitle"><i>Projects and Tutorials</i></p>
 
-<div class="container" aos-data="fade-up">
-	<h2 class="container-title">Tutorials</h2>
+<div class="container">
+	<a href="tutorials/tutorials.html" class="container-title">Tutorials</a>
 	<div id="tutorials">
-		<div class="tutorial">
-			<img src="https://nialltownley.co.uk/tutorials/opengl/opengl.png"/>	
-		</div>
+		<a href="tutorials/tutorials.html" class="tutorial">
+			<img src="https://nialltownley.co.uk/tutorials/opengl/opengl-small.png" width="150" height="63"/>
+			<h3 class="tutorial-title">OpenGL Tutorials</h3>
+			<p class="tutorial-desc">
+				Opengl is a very powerful graphics API which has powered games and computer graphics engines for decades.
+				<br/><br/>
+				In these tutorials we will start with the basics of OpenGL - rendering using GLUT and the fixed-functionally
+				pipeline. But in later tutorials we will cover more advanced topics and develop an abstraction which will make it easier
+				for us to develop advanced shading.
+			</p>
+			<p class="tutorial-no">Tutorials coming soon</p>
+		</a>
 
-		<div class="tutorial">
-			<p>mega Cool</p>
-		</div>
+		<a href="tutorials/tutorials.html" class="tutorial">
+			<img src="https://nialltownley.co.uk/tutorials/source/source-small.png" width="205" height="63"/>
+			<h3 class="tutorial-title">Source Engine Tutorials</h3>
+			<p class="tutorial-desc">
+				The source engine, Valve's in-house proprietary engine was used to develop many of the greatest games of the last
+				generation. While it might seem old-fashioned compared to Unity and Unreal - the graphical behemoths of our age -
+				its powerful archetecture is still great to learn from an achademic perspective. Also with modern games like Titanfall 2
+				pushing the engine to its limits I think it is safe to say the Source engine is as relevant now as ever.
+				<br/><br/>
+				In these tutorials I will teach you how to setup and run a Source mod. How to create custom assets and entities. We
+				 will cover AI/NPC creation and UI in later tutorials.
+			</p>
+			<p class="tutorial-no">Tutorials coming soon</p>
+		</a>
+	</div>
+</div>
 
-		<div class="tutorial">
-			<p>mega Cool</p>
+<div class="container">
+	<a class="container-title">Projects</a>
+	<div id="projects">
+		<div class="project">
+			<h3>Moonlight</h3>
 		</div>
 	</div>
 </div>
 
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-	AOS.init();
-</script>
 </body>
 </html>

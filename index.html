@@ -1,69 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Niall Townley</title>
-	<link rel="icon" href="https://nialltownley.co.uk/favicon.png">
-	<link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Niall Townley – Recital Lyrics & Translations</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 1.5em;
+			background-color: #0a1e40;
+			color: #f5f5f5;
+			font-family: 'Alegreya';
+			display: flex;
+			justify-content: center;
+		}
+
+		.container {
+			max-width: 600px;
+			width: 100%;
+			text-align: justify;
+			margin-right: auto;
+			margin-left: auto;
+		}
+
+		h1, h2 {
+			color: #ffffff;
+			text-align: center;
+		}
+
+		h2 {
+			font-size: 1.2em;
+			color: #a0c4ff;
+			margin-top: 2em;
+		}
+
+		.song {
+			margin-bottom: 2em;
+		}
+
+		.original, .translation {
+			margin: 0.3em 0;
+		}
+
+		.translation {
+			font-style: italic;
+			color: #c0d6f9;
+		}
+
+		@media (max-width: 600px) {
+			body {
+				padding: 1em;
+			}
+		}
+	</style>
 </head>
+<body>
+	<div class="container">
+		<h1>Niall Townley</h1>
+		<h2>Chansons de Bilitis – Pierre Louÿs / trans. Richard Stokes</h2>
 
-<body onload="initPlanet();">
+		<div class="song">
+			<h2>La Flûte de Pan</h2>
+			<p class="original">Pour le jour des Hyacinthies, il m’a donné une syrinx</p>
+			<p class="translation">For Hyacinthus day he gave me a syrinx</p>
+			<p class="original">faite de roseaux bien taillés, unis avec la blanche cire</p>
+			<p class="translation">made of carefully cut reeds, bonded with white wax</p>
+			<p class="original">qui est douce à mes lèvres comme le miel.</p>
+			<p class="translation">which tastes sweet to my lips like honey.</p>
 
-<div id="title-planet">
-	<canvas id="planetCanvas" width=480 height=480>
-		<p>Your browser does not support canvases, imagine something cool here</p>
-	</canvas>
-	<img id="albedo-texture" src="https://nialltownley.co.uk/textures/earthDay.jpg" width="0" height="0" crossorigin="anonymous"/>
-	<img id="night-texture" src="https://nialltownley.co.uk/textures/earthNight.jpg" width="0" height="0" crossorigin="anonymous"/>
-	<img id="specular-texture" src="https://nialltownley.co.uk/textures/earthSpecular.jpg" width="0" height="0" crossorigin="anonymous">
-	<script src="sphereFactory.js"></script>
-	<script src="gl-matrix.js"></script>
-	<script src="planet.js"></script>
-</div>
+			</br>
 
-<h1 id="title-text">Niall Townley</h1>
-<p id="subtitle"><i>Projects and Tutorials</i></p>
+			<p class="original">Il m’apprend à jouer, assise sur ses genoux;</p>
+			<p class="translation">He teaches me to play, as I sit on his lap;</p>
+			<p class="original">mais je suis un peu tremblante. Il en joue après moi, si</p>
+			<p class="translation">but I am a little fearful. He plays it after me, so</p>
+			<p class="original">doucement que je l’entends à peine.</p>
+			<p class=translation">scarcely hear him.</p>
 
-<div class="container">
-	<a href="tutorials/tutorials.html" class="container-title">Tutorials</a>
-	<div id="tutorials">
-		<a href="tutorials/tutorials.html" class="tutorial">
-			<img src="https://nialltownley.co.uk/tutorials/opengl/opengl-small.png" width="150" height="63"/>
-			<h3 class="tutorial-title">OpenGL Tutorials</h3>
-			<p class="tutorial-desc">
-				Opengl is a very powerful graphics API which has powered games and computer graphics engines for decades.
-				<br/><br/>
-				In these tutorials we will start with the basics of OpenGL - rendering using GLUT and the fixed-functionally
-				pipeline. But in later tutorials we will cover more advanced topics and develop an abstraction which will make it easier
-				for us to develop advanced shading.
-			</p>
-			<p class="tutorial-no">Tutorials coming soon</p>
-		</a>
+			<p class="original">Nous n’avons rien à nous dire, tant nous sommes</p>
+			<p class="translation">We have nothing to say, so close are we one to</p>
+			<p class="original">près l’un de l’autre; mais nos chansons veulent se</p>
+			<p class="translation">another, but our songs try to answer each other, and</p>
+			<p class="original">répondre, et tour à tour nos bouches s’unissent sur la flûte.</p>
+			<p class="translation">our mouths join in turn on the flute.</p>
 
-		<a href="tutorials/tutorials.html" class="tutorial">
-			<img src="https://nialltownley.co.uk/tutorials/source/source-small.png" width="205" height="63"/>
-			<h3 class="tutorial-title">Source Engine Tutorials</h3>
-			<p class="tutorial-desc">
-				The source engine, Valve's in-house proprietary engine was used to develop many of the greatest games of the last
-				generation. While it might seem old-fashioned compared to Unity and Unreal - the graphical behemoths of our age -
-				its powerful archetecture is still great to learn from an academic perspective. Also with modern games like Titanfall 2
-				pushing the engine to its limits I think it is safe to say the Source engine is as relevant now as ever.
-				<br/><br/>
-				In these tutorials I will teach you how to setup and run a Source mod. How to create custom assets and entities. We
-				 will cover AI/NPC creation and UI in later tutorials.
-			</p>
-			<p class="tutorial-no">Tutorials coming soon</p>
-		</a>
-	</div>
-</div>
-
-<div class="container">
-	<a class="container-title">Projects</a>
-	<div id="projects">
-		<div class="project">
-			<h3>Moonlight</h3>
+			<p class="original">Il est tard; voici le chant des grenouilles vertes qui</p>
+			<p class="translation">It is late; here is the song of the green frogs that</p>
+			<p class="original">commence avec la nuit. Ma mère ne croira jamais que</p>
+			<p class="translation">begins with the night. My mother will never believe</p>
+			<p class="original">je suis restée si longtemps à chercher ma ceinture perdue.</p>
+			<p class="translation">I stayed out so long to look for my lost sash.</p>
 		</div>
 	</div>
-</div>
-
 </body>
 </html>

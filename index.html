@@ -16,6 +16,26 @@
 			justify-content: center;
 		}
 
+		.contents {
+			margin-bottom: 2em;
+			padding: 1em;
+			background-color: #122c5f;
+			border-radius: 8px;
+		}
+		.contents ul {
+			padding-left: 1.2em;
+		}
+		.contents li {
+			margin: 0.4em 0;
+		}
+		.contents a {
+			color: #a0c4ff;
+			text-decoration: none;
+		}
+		.contents a:hover {
+			text-decoration: underline;
+		}
+
 		.container {
 			max-width: 600px;
 			width: 100%;
@@ -58,9 +78,23 @@
 <body>
 	<div class="container">
 		<h1>Niall Townley</h1>
-		<h2>Chansons de Bilitis – Pierre Louÿs / trans. Richard Stokes</h2>
+		<div class="contents">
+			<h2>Programme</h2>
+			<ul>
+				<li>
+					<a href="#bilitis">Chansons de Bilitis</a>
+					<ul>
+						<li><a href="#la-flute-de-pan">La Flûte de Pan</a></li>
+						<li><a href="#la-chevelure">La Chevelure</a></li>
+					</ul>
+				</li>
+				<!-- Add more cycles and their songs below in the same format -->
+			</ul>
+		</div>
+		
+		<h2 id="bilitis">Chansons de Bilitis – Pierre Louÿs / trans. Richard Stokes</h2>
 
-		<div class="song">
+		<div class="song" id="la-flute-de-pan">
 			<h2>La Flûte de Pan</h2>
 			<p class="original">Pour le jour des Hyacinthies, il m’a donné une syrinx</p>
 			<p class="translation">For Hyacinthus day he gave me a syrinx</p>
@@ -69,14 +103,16 @@
 			<p class="original">qui est douce à mes lèvres comme le miel.</p>
 			<p class="translation">which tastes sweet to my lips like honey.</p>
 
-			</br>
+		</br>
 
 			<p class="original">Il m’apprend à jouer, assise sur ses genoux;</p>
 			<p class="translation">He teaches me to play, as I sit on his lap;</p>
 			<p class="original">mais je suis un peu tremblante. Il en joue après moi, si</p>
 			<p class="translation">but I am a little fearful. He plays it after me, so</p>
 			<p class="original">doucement que je l’entends à peine.</p>
-			<p class=translation">scarcely hear him.</p>
+			<p class="translation">scarcely hear him.</p>
+
+		</br>
 
 			<p class="original">Nous n’avons rien à nous dire, tant nous sommes</p>
 			<p class="translation">We have nothing to say, so close are we one to</p>
@@ -84,7 +120,8 @@
 			<p class="translation">another, but our songs try to answer each other, and</p>
 			<p class="original">répondre, et tour à tour nos bouches s’unissent sur la flûte.</p>
 			<p class="translation">our mouths join in turn on the flute.</p>
-
+		</br>
+			
 			<p class="original">Il est tard; voici le chant des grenouilles vertes qui</p>
 			<p class="translation">It is late; here is the song of the green frogs that</p>
 			<p class="original">commence avec la nuit. Ma mère ne croira jamais que</p>
@@ -92,6 +129,7 @@
 			<p class="original">je suis restée si longtemps à chercher ma ceinture perdue.</p>
 			<p class="translation">I stayed out so long to look for my lost sash.</p>
 		</div>
+		<!-- Add remaining songs! -->
 	</div>
 </body>
 </html>
